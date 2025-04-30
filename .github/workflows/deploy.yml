@@ -39,7 +39,10 @@ jobs:
             
             echo "cloning the repo..."
             git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
-            
+
+            cd PearlThoughtsAssignment/ansible
+            ansible-playbook -i inventory.ini playbook.yml
+             
             echo "Deploying with stack..."
             docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
