@@ -47,7 +47,7 @@ jobs:
 
       - name: SSH into EC2 and deploy via Docker Swarm
         uses: appleboy/ssh-action@v0.1.6
-          with:
+        with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
