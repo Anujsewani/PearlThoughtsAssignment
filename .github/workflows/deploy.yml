@@ -32,7 +32,7 @@ jobs:
             set -e
             echo "cloning the repo..."
             git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
-
+            sudo apt install ansible
             cd PearlThoughtsAssignment/ansible
             ansible-playbook -i inventory.ini playbook.yml
 
