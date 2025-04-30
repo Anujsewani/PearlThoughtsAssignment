@@ -2,5 +2,5 @@
   shell: docker pull sewani/yii2-app:latest
 
 - name: Deploy stack
-  shell: docker stack deploy -c /home/ubuntu/stack.yml yii2stack
+  shell: docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 

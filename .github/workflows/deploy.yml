@@ -13,8 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v1
+          #- name: Set up Docker
+          #uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
         run: docker build -f docker/Dockerfile -t sewani/yii2-app:latest .
