@@ -45,7 +45,7 @@ jobs:
             docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
 
             echo "Deploying stack..."
-            docker stack deploy -c PearlThoughtsAssignment/stack.yml yii2stack
+            docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
             echo "Deployment complete."
 
