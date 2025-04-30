@@ -9,14 +9,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-
-      - name: SSH into EC2 and build/deploy
+      - name: SSH into EC2 and clone + deploy
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Set working directory
+            #cd /home/ubuntu
             cd /home/ubuntu/PearlThoughtsAssignment
 
             # Pull latest code (if repo is already cloned)
