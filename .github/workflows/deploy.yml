@@ -22,30 +22,7 @@ jobs:
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
 
-      - name: SSH into EC2 and clone repo
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            set -e
-            rm -rf PearlThoughtsAssignment
-            echo "cloning the repo..."
-            git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
-            sudo apt update
-            sudo apt install ansible-core -y
-            cd PearlThoughtsAssignment/ansible
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.ini playbook.yml 
-
-
-      - name: pull docker image
-        run:  docker pull ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
- 
-      - name: deploy application
-        run: docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
-
-          #      - name: SSH into EC2 and deploy via Docker Swarm
+          #    - name: SSH into EC2 and clone repo
           # uses: appleboy/ssh-action@v0.1.6
           #with:
           #host: ${{ secrets.EC2_HOST }}
@@ -53,24 +30,47 @@ jobs:
           #key: ${{ secrets.EC2_SSH_KEY }}
           #script: |
           #  set -e
+          #  rm -rf PearlThoughtsAssignment
+          #  echo "cloning the repo..."
+          #  git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
+          #  sudo apt update
+          #  sudo apt install ansible-core -y
+            #cd PearlThoughtsAssignment/ansible
+            #  ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.ini playbook.yml 
 
-          # echo "Pulling latest image..."
-          #  docker pull ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
 
-            #echo "Creating backup of old service config..."
-            #docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
+          #- name: pull docker image
+          #run:  docker pull ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
+ 
+          #- name: deploy application
+          #run: docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
+
+      - name: SSH into EC2 and deploy via Docker Swarm
+        uses: appleboy/ssh-action@v0.1.6
+          with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+
+            echo "Pulling latest image..."
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
+
+            echo "Creating backup of old service config..."
+            docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
             
           # echo "cloning the repo..."
-          #  git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
+            git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
 
           # cd PearlThoughtsAssignment/ansible
           #  ansible-playbook -i inventory.ini playbook.yml
              
           #  echo "Deploying with stack..."
-          #  docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
+            docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
             #echo "Waiting for service update..."
-            #sleep 10
+            # sleep 10
 
             #echo "Checking service health..."
             #STATUS=$(docker service ps yii2stack_yii2app --no-trunc --format "{{.CurrentState}}" | grep -c "Running")
