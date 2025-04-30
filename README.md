@@ -26,11 +26,13 @@ This project showcases a full DevOps pipeline to deploy a sample **PHP Yii2 appl
 git clone https://github.com/Anujsewani/PearlThoughtsAssignment
 cd PearlThoughtsAssignment/ansible
 ansible-playbook -i inventory.ini playbook.yml
-
+```
 ### 3. Assumptions
-i am running ansible on local machine and deploying infrastrucure on aws instance 
+
+I am running ansible on local machine and deploying infrastrucure on aws instance 
 
 ### 4. How to test deployment
-1. Run cicd pipeline and see if it runs successfully, you can make changes in repo and push to github as it will trigger pipeline
+
+Run cicd pipeline and see if it runs successfully, you can make changes in repo and push to github as it will trigger pipeline
 
 
