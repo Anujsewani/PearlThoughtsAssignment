@@ -36,7 +36,10 @@ jobs:
 
             echo "Creating backup of old service config..."
             docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
-
+            
+            echo "cloning the repo..."
+            git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
+            
             echo "Deploying with stack..."
             docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
