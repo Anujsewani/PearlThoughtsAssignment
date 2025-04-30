@@ -1,0 +1,7 @@
+- name: Setup and deploy Yii2 app
+  hosts: web
+  become: yes
+  roles:
+    - docker
+    - nginx
+    - yii2

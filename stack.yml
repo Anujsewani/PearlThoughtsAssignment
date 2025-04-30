@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  yii2:
+    image: sewani/yii2-app:latest
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 1
+

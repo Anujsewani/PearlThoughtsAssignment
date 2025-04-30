@@ -1,0 +1,32 @@
+- name: Install NGINX
+  apt:
+    name: nginx
+    state: present
+
+- name: Copy NGINX config
+  copy:
+    dest: /etc/nginx/sites-available/yii2
+    content: |
+      server {
+          listen 80;
+          server_name _;
+
+          location / {
+              proxy_pass http://localhost:8080;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+          }
+      }
+
+- name: Enable NGINX config
+  file:
+    src: /etc/nginx/sites-available/yii2
+    dest: /etc/nginx/sites-enabled/yii2
+    state: link
+    force: yes
+
+- name: Restart NGINX
+  service:
+    name: nginx
+    state: restarted
+
