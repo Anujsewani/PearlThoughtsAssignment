@@ -20,5 +20,32 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest_
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
+
+      - name: SSH into EC2 and deploy via Docker Swarm
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+
+            echo "Cloning or updating repo..."
+            if [ ! -d "PearlThoughtsAssignment" ]; then
+              git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
+            else
+              cd PearlThoughtsAssignment && git pull && cd ..
+            fi
+
+            echo "Pulling latest image..."
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
+
+            echo "Creating backup of old service config..."
+            docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
+
+            echo "Deploying stack..."
+            docker stack deploy -c PearlThoughtsAssignment/stack.yml yii2stack
+
+            echo "Deployment complete."
 
