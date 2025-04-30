@@ -17,7 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
-        run: docker build -t sewani/yii2-app:latest .
+        run: docker build -f docker/Dockerfile -t sewani/yii2-app:latest .
 
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
@@ -33,5 +33,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker pull yourdockerhubusername/yii2-app
-            docker stack deploy -c /home/ubuntu/stack.yml yii2stack
+            docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
