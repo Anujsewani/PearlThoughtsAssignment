@@ -17,13 +17,13 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
-        run: docker build -t yourdockerhubusername/yii2-app .
+        run: docker build -t sewani/yii2-app:latest .
 
       - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image
-        run: docker push yourdockerhubusername/yii2-app
+        run: docker push sewani/yii2-app:latest
 
       - name: SSH into EC2 and update
         uses: appleboy/ssh-action@v0.1.6
