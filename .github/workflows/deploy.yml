@@ -30,6 +30,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
+            rm -rf PearlThoughtsAssignment
             echo "cloning the repo..."
             git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
             sudo apt install ansible
