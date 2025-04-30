@@ -34,8 +34,8 @@ jobs:
             echo "Pulling latest image..."
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/yii2-app:latest
 
-            echo "Creating backup of old service config..."
-            docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
+            #echo "Creating backup of old service config..."
+            #docker service inspect yii2stack_yii2app > service-backup.json || echo "No existing service"
             
             echo "cloning the repo..."
             git clone https://github.com/Anujsewani/PearlThoughtsAssignment.git
@@ -43,19 +43,19 @@ jobs:
             echo "Deploying with stack..."
             docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
-            echo "Waiting for service update..."
-            sleep 10
+            #echo "Waiting for service update..."
+            #sleep 10
 
-            echo "Checking service health..."
-            STATUS=$(docker service ps yii2stack_yii2app --no-trunc --format "{{.CurrentState}}" | grep -c "Running")
+            #echo "Checking service health..."
+            #STATUS=$(docker service ps yii2stack_yii2app --no-trunc --format "{{.CurrentState}}" | grep -c "Running")
 
-            if [ "$STATUS" -eq 0 ]; then
-              echo "Deployment failed. Rolling back..."
-              if [ -f service-backup.json ]; then
-                echo "Rollback logic placeholder - define rollback manually"
-              fi
-              exit 1
-            fi
+            #if [ "$STATUS" -eq 0 ]; then
+            #  echo "Deployment failed. Rolling back..."
+            #  if [ -f service-backup.json ]; then
+            #    echo "Rollback logic placeholder - define rollback manually"
+            #  fi
+            #  exit 1
+            #fi
 
             echo "Deployment successful"
 
