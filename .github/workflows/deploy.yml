@@ -32,6 +32,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker pull yourdockerhubusername/yii2-app
+            docker pull sewani/yii2-app:latest
             docker stack deploy -c /home/ubuntu/PearlThoughtsAssignment/stack.yml yii2stack
 
